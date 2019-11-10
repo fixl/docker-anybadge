@@ -10,7 +10,7 @@ build:
     - docker login -u ${DOCKERHUB_USERNAME} -p ${DOCKERHUB_PASSWORD}
   script:
     - make build
-#    - make scan CACHE_DIR=$(pwd)/.cache
+    - make scan CACHE_DIR=$(pwd)/.cache
     - make publishGitlab
     - make publishDockerhub
   only:
