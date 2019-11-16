@@ -1,16 +1,12 @@
 image: flemay/musketeers
 
-cache:
-  paths:
-    - .cache
-
 build:
   before_script:
     - docker login -u gitlab-ci-token -p ${CI_BUILD_TOKEN} ${CI_REGISTRY}
     - docker login -u ${DOCKERHUB_USERNAME} -p ${DOCKERHUB_PASSWORD}
   script:
     - make build
-    - make scan CACHE_DIR=$(pwd)/.cache
+    - make scan
     - make publishGitlab
     - make publishDockerhub
   only:

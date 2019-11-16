@@ -6,9 +6,7 @@ GITLAB_IMAGE ?= registry.gitlab.com/fixl/docker-$(IMAGE_NAME)
 
 TAG = $(ANYBADGE_VERSION)
 
-CACHE_DIR ?= $(HOME)/.cache
-
-TRIVY_COMMAND = docker run --rm -i -v /var/run/docker.sock:/var/run/docker.sock -v $(CACHE_DIR):/root/.cache/ aquasec/trivy:0.1.7
+TRIVY_COMMAND = docker run --rm -i -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy:0.2.1
 
 build:
 	docker build \
@@ -17,9 +15,8 @@ build:
 		--tag $(IMAGE_NAME) .
 
 scan:
-	mkdir -p ${CACHE_DIR}
-	$(TRIVY_COMMAND) --auto-refresh --clear-cache --no-progress $(IMAGE_NAME)
-	$(TRIVY_COMMAND) --auto-refresh --clear-cache --no-progress --exit-code 1 --severity CRITICAL $(IMAGE_NAME)
+	$(TRIVY_COMMAND) --clear-cache --no-progress $(IMAGE_NAME)
+	$(TRIVY_COMMAND) --clear-cache --no-progress --exit-code 1 --severity CRITICAL $(IMAGE_NAME)
 
 publishDockerhub:
 	docker tag $(IMAGE_NAME) $(DOCKERHUB_IMAGE)
