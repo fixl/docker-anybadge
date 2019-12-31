@@ -6,7 +6,7 @@ GITLAB_IMAGE ?= registry.gitlab.com/fixl/docker-$(IMAGE_NAME)
 
 TAG = $(ANYBADGE_VERSION)
 
-TRIVY_COMMAND = docker run --rm -i -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy:0.2.1
+TRIVY_COMMAND = docker run --rm -i -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy:latest
 
 build:
 	docker build \
