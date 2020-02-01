@@ -4,6 +4,9 @@ build:
   script:
     - make build
     - make scan
+  artifacts:
+    reports:
+      container_scanning: gl-container-scanning-report.json
   except:
     - tags
 
@@ -16,5 +19,8 @@ publish:
     - make scan
     - make publishGitlab
     - make publishDockerhub
+  artifacts:
+    reports:
+      container_scanning: gl-container-scanning-report.json
   only:
     - tags
