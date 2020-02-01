@@ -4,6 +4,10 @@ IMAGE_NAME ?= anybadge
 DOCKERHUB_IMAGE ?= fixl/$(IMAGE_NAME)
 GITLAB_IMAGE ?= registry.gitlab.com/fixl/docker-$(IMAGE_NAME)
 
+CI_COMMIT_SHORT_SHA ?= $(shell git rev-parse --short HEAD)
+CI_PROJECT_URL ?= $(shell git config --get remote.origin.url)
+CI_PIPELINE_URL ?= local
+
 TAG = $(ANYBADGE_VERSION)
 TRIVY_COMMAND = docker run --rm -i -v $(shell pwd):/src -w /src -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy:latest
 
@@ -12,7 +16,9 @@ build:
 		--pull \
 		--build-arg ANYBADGE_VERSION=$(ANYBADGE_VERSION) \
 		--build-arg BUILD_DATE=$(shell date -u +"%Y-%m-%dT%H:%M:%SZ") \
-		--build-arg VCS_REF=$(shell git rev-parse --short HEAD) \
+		--build-arg VCS_URL=$(CI_PROJECT_URL) \
+		--build-arg VCS_REF=$(CI_COMMIT_SHORT_SHA) \
+		--build-arg PIPELINE=$(CI_PIPELINE_URL) \
 		--tag $(IMAGE_NAME) .
 
 scan:
