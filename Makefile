@@ -5,8 +5,7 @@ DOCKERHUB_IMAGE ?= fixl/$(IMAGE_NAME)
 GITLAB_IMAGE ?= registry.gitlab.com/fixl/docker-$(IMAGE_NAME)
 
 TAG = $(ANYBADGE_VERSION)
-
-TRIVY_COMMAND = docker run --rm -i -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy:latest
+TRIVY_COMMAND = docker run --rm -i -v $(shell pwd):/src -w /src -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy:latest
 
 build:
 	docker build \
@@ -15,8 +14,11 @@ build:
 		--tag $(IMAGE_NAME) .
 
 scan:
-	$(TRIVY_COMMAND) --clear-cache --no-progress $(IMAGE_NAME)
-	$(TRIVY_COMMAND) --clear-cache --no-progress --exit-code 1 --severity CRITICAL $(IMAGE_NAME)
+	if [ ! -f gitlab.tpl ] ; then curl --output gitlab.tpl https://raw.githubusercontent.com/aquasecurity/trivy/master/contrib/gitlab.tpl;  fi
+
+	$(TRIVY_COMMAND) --clear-cache
+	$(TRIVY_COMMAND) --exit-code 0 --no-progress --format template --template "@gitlab.tpl" -o gl-container-scanning-report.json $(IMAGE_NAME)
+	$(TRIVY_COMMAND) --exit-code 1 --no-progress --severity CRITICAL $(IMAGE_NAME)
 
 publishDockerhub:
 	docker tag $(IMAGE_NAME) $(DOCKERHUB_IMAGE)
