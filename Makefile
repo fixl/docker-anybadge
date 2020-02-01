@@ -11,6 +11,8 @@ build:
 	docker build \
 		--pull \
 		--build-arg ANYBADGE_VERSION=$(ANYBADGE_VERSION) \
+		--build-arg BUILD_DATE=$(shell date -u +"%Y-%m-%dT%H:%M:%SZ") \
+		--build-arg VCS_REF=$(shell git rev-parse --short HEAD) \
 		--tag $(IMAGE_NAME) .
 
 scan:
