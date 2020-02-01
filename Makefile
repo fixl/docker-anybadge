@@ -26,7 +26,7 @@ scan:
 
 	$(TRIVY_COMMAND) --clear-cache
 	$(TRIVY_COMMAND) --exit-code 0 --no-progress --format template --template "@gitlab.tpl" -o gl-container-scanning-report.json $(IMAGE_NAME)
-	$(TRIVY_COMMAND) --exit-code 1 --no-progress --severity CRITICAL $(IMAGE_NAME)
+	$(TRIVY_COMMAND) --exit-code 1 --no-progress --ignore-unfixed --severity CRITICAL $(IMAGE_NAME)
 
 publishDockerhub:
 	docker tag $(IMAGE_NAME) $(DOCKERHUB_IMAGE)
