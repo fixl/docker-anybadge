@@ -1,5 +1,9 @@
 image: flemay/musketeers
 
+cache:
+  paths:
+    - .cache
+
 build:
   script:
     - make build
