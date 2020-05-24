@@ -1,5 +1,12 @@
 image: flemay/musketeers
 
+variables:
+  DOCKER_HOST: tcp://docker:2375
+  DOCKER_TLS_CERTDIR: ""
+
+services:
+  - docker:19.03.8-dind
+
 cache:
   paths:
     - .cache
