@@ -87,7 +87,7 @@ gitRelease:
 	git push
 
 clean:
-	$(TRIVY_COMMAND) rm -rf gitlab.tpl .cache *.tar *.json
+	$(TRIVY_COMMAND) rm -rf gitlab.tpl .cache *.tar
 	-docker rmi $(IMAGE_NAME)
 	-docker rmi $(GITLAB_IMAGE_LATEST)
 	-docker rmi $(GITLAB_IMAGE_MAJOR)
