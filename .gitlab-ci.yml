@@ -1,4 +1,4 @@
-defaults:
+default:
   image: flemay/musketeers
   after_script:
     - make clean
