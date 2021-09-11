@@ -69,6 +69,10 @@ scan: $(EXTRACTED_FILE)
 $(EXTRACTED_FILE):
 	docker save --output $(EXTRACTED_FILE) $(IMAGE_NAME)
 
+badges:
+	$(ANYBADGE_RUN_COMMAND) docker-size $(DOCKERHUB_IMAGE_PATCH)
+	$(ANYBADGE_RUN_COMMAND) docker-version $(DOCKERHUB_IMAGE_PATCH)
+
 publishDockerhub:
 	docker push $(DOCKERHUB_IMAGE_LATEST)
 	docker push $(DOCKERHUB_IMAGE_MAJOR)
@@ -89,7 +93,7 @@ gitRelease:
 	git push
 
 clean:
-	$(TRIVY_COMMAND) rm -rf gitlab.tpl .cache *.tar *.svg
+	$(TRIVY_COMMAND) rm -rf gitlab.tpl .cache *.tar
 	-docker rmi $(IMAGE_NAME)
 	-docker rmi $(GITLAB_IMAGE_LATEST)
 	-docker rmi $(GITLAB_IMAGE_MAJOR)
@@ -99,3 +103,7 @@ clean:
 	-docker rmi $(DOCKERHUB_IMAGE_MAJOR)
 	-docker rmi $(DOCKERHUB_IMAGE_MINOR)
 	-docker rmi $(DOCKERHUB_IMAGE_PATCH)
+
+cleanAll:
+	(TRIVY_COMMAND) rm -rf *.svg
+	$(MAKE) clean

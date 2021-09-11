@@ -1,7 +1,8 @@
 # anybadge Image
 
-[![](https://images.microbadger.com/badges/image/fixl/anybadge.svg)](https://microbadger.com/images/fixl/anybadge "Get your own image badge on microbadger.com")
-[![](https://images.microbadger.com/badges/version/fixl/anybadge.svg)](https://microbadger.com/images/fixl/anybadge "Get your own version badge on microbadger.com")
+[![pipeline status](https://gitlab.com/fixl/docker-anybadge/badges/master/pipeline.svg)](https://gitlab.com/fixl/docker-anybadge/-/commits/master)
+[![size](https://gitlab.com/fixl/docker-anybadge/-/jobs/artifacts/master/raw/size.svg?job=publish)](https://gitlab.com/fixl/docker-anybadge/-/commits/master)
+[![version](https://gitlab.com/fixl/docker-anybadge/-/jobs/artifacts/master/raw/version.svg?job=publish)](https://gitlab.com/fixl/docker-anybadge/-/commits/master)
 [![Docker Pulls](https://img.shields.io/docker/pulls/fixl/anybadge)](https://hub.docker.com/r/fixl/anybadge)
 [![Docker Pulls](https://img.shields.io/docker/stars/fixl/anybadge)](https://hub.docker.com/r/fixl/anybadge)
 
