@@ -4,7 +4,7 @@
 [![version](https://fixl.gitlab.io/docker-anybadge/version.svg)](https://gitlab.com/fixl/docker-anybadge/-/commits/master)
 [![size](https://fixl.gitlab.io/docker-anybadge/size.svg)](https://gitlab.com/fixl/docker-anybadge/-/commits/master)
 [![Docker Pulls](https://img.shields.io/docker/pulls/fixl/anybadge)](https://hub.docker.com/r/fixl/anybadge)
-[![Docker Pulls](https://img.shields.io/docker/stars/fixl/anybadge)](https://hub.docker.com/r/fixl/anybadge)
+[![Docker Stars](https://img.shields.io/docker/stars/fixl/anybadge)](https://hub.docker.com/r/fixl/anybadge)
 
 A Docker container containing [anybadge](https://github.com/jongracecox/anybadge) that can be used
 along with [3 Musketeers](https://3musketeers.io/).
