@@ -16,6 +16,8 @@ EXTRACTED_FILE = extracted.tar
 
 TRIVY_COMMAND = docker-compose run --rm trivy
 
+ANYBADGE_RUN_COMMAND = docker run --rm -ti --entrypoint "" --volume $(shell pwd):/src --volume /var/run/docker.sock:/var/run/docker.sock -w /src $(IMAGE_NAME)
+
 # Computed
 MAJOR = $(shell echo ${ANYBADGE_VERSION} | awk -F. '{print $$1}')
 MINOR = $(shell echo ${ANYBADGE_VERSION} | awk -F. '{print $$1"."$$2}')
@@ -87,7 +89,7 @@ gitRelease:
 	git push
 
 clean:
-	$(TRIVY_COMMAND) rm -rf gitlab.tpl .cache *.tar
+	$(TRIVY_COMMAND) rm -rf gitlab.tpl .cache *.tar *.svg
 	-docker rmi $(IMAGE_NAME)
 	-docker rmi $(GITLAB_IMAGE_LATEST)
 	-docker rmi $(GITLAB_IMAGE_MAJOR)
