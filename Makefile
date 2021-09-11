@@ -16,7 +16,7 @@ EXTRACTED_FILE = extracted.tar
 
 TRIVY_COMMAND = docker-compose run --rm trivy
 
-ANYBADGE_RUN_COMMAND = docker run --rm -ti --entrypoint "" --volume $(shell pwd):/src --volume /var/run/docker.sock:/var/run/docker.sock -w /src $(IMAGE_NAME)
+ANYBADGE_RUN_COMMAND = docker run --rm -t --entrypoint "" --volume $(shell pwd):/src --volume /var/run/docker.sock:/var/run/docker.sock -w /src $(IMAGE_NAME)
 
 # Computed
 MAJOR = $(shell echo ${ANYBADGE_VERSION} | awk -F. '{print $$1}')
