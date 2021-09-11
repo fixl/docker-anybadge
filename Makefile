@@ -70,8 +70,9 @@ $(EXTRACTED_FILE):
 	docker save --output $(EXTRACTED_FILE) $(IMAGE_NAME)
 
 badges:
-	$(ANYBADGE_RUN_COMMAND) docker-size $(DOCKERHUB_IMAGE_PATCH)
-	$(ANYBADGE_RUN_COMMAND) docker-version $(DOCKERHUB_IMAGE_PATCH)
+	mkdir -p public
+	$(ANYBADGE_RUN_COMMAND) docker-size $(DOCKERHUB_IMAGE_PATCH) public/size
+	$(ANYBADGE_RUN_COMMAND) docker-version $(DOCKERHUB_IMAGE_PATCH) public/version
 
 publishDockerhub:
 	docker push $(DOCKERHUB_IMAGE_LATEST)
@@ -105,5 +106,5 @@ clean:
 	-docker rmi $(DOCKERHUB_IMAGE_PATCH)
 
 cleanAll:
-	(TRIVY_COMMAND) rm -rf *.svg
+	$(TRIVY_COMMAND) rm -rf public
 	$(MAKE) clean
