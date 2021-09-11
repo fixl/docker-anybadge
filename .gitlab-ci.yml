@@ -28,6 +28,7 @@ publish:
     paths:
       - version.svg
       - size.svg
+    expire_in: 24 mos
     reports:
       container_scanning: gl-container-scanning-report.json
   only:
