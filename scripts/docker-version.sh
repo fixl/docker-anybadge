@@ -13,4 +13,6 @@ fi
 
 VERSION=$(echo ${IMAGE} | awk -F: '{print $2}')
 
+echo "version: ${VERSION}"
+
 anybadge --overwrite --label=version --value=${VERSION:-latest} --file ${FILENAME}.svg
