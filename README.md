@@ -1,6 +1,6 @@
 # anybadge Image
 
-[![pipeline status](https://gitlab.com/fixl/docker-anybadge/badges/master/pipeline.svg)](https://gitlab.com/fixl/docker-anybadge/-/commits/master)
+[![pipeline status](https://gitlab.com/fixl/docker-anybadge/badges/master/pipeline.svg)](https://gitlab.com/fixl/docker-anybadge/-/pipelines)
 [![version](https://fixl.gitlab.io/docker-anybadge/version.svg)](https://gitlab.com/fixl/docker-anybadge/-/commits/master)
 [![size](https://fixl.gitlab.io/docker-anybadge/size.svg)](https://gitlab.com/fixl/docker-anybadge/-/commits/master)
 [![Docker Pulls](https://img.shields.io/docker/pulls/fixl/anybadge)](https://hub.docker.com/r/fixl/anybadge)
