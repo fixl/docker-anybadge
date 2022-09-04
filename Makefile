@@ -13,8 +13,9 @@ CI_PIPELINE_URL ?= local
 TAG = $(ANYBADGE_VERSION)
 
 EXTRACTED_FILE = extracted.tar
+DOCKER_BUILDKIT = 1
 
-TRIVY_COMMAND = docker-compose run --rm trivy
+TRIVY_COMMAND = docker compose run --rm trivy
 
 ANYBADGE_RUN_COMMAND = docker run --rm -t --entrypoint "" --volume $(shell pwd):/src --volume /var/run/docker.sock:/var/run/docker.sock -w /src $(IMAGE_NAME)
 
@@ -38,6 +39,7 @@ DOCKERHUB_IMAGE_PATCH = $(DOCKERHUB_IMAGE):$(PATCH)
 
 build:
 	docker build \
+		--progress=plain \
 		--pull \
 		--build-arg ANYBADGE_VERSION=$(ANYBADGE_VERSION) \
 		--label "org.opencontainers.image.title=$(IMAGE_NAME)" \
