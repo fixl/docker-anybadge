@@ -38,9 +38,10 @@ DOCKERHUB_IMAGE_PATCH = $(DOCKERHUB_IMAGE):$(PATCH)
 .EXPORT_ALL_VARIABLES:
 
 build:
-	docker build \
+	docker buildx build \
 		--progress=plain \
 		--pull \
+		--load \
 		--build-arg ANYBADGE_VERSION=$(ANYBADGE_VERSION) \
 		--label "org.opencontainers.image.title=$(IMAGE_NAME)" \
 		--label "org.opencontainers.image.url=https://github.com/jongracecox/anybadge" \
