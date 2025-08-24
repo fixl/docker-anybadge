@@ -97,7 +97,7 @@ gitRelease:
 	git push
 
 clean:
-	$(TRIVY_COMMAND) rm -rf gitlab.tpl .cache *.tar
+	$(TRIVY_COMMAND) rm -rf public/ *.tar *.sarif
 	-docker rmi $(IMAGE_NAME)
 	-docker rmi $(GITHUB_IMAGE_LATEST)
 	-docker rmi $(GITHUB_IMAGE_MAJOR)
@@ -107,7 +107,3 @@ clean:
 	-docker rmi $(DOCKERHUB_IMAGE_MAJOR)
 	-docker rmi $(DOCKERHUB_IMAGE_MINOR)
 	-docker rmi $(DOCKERHUB_IMAGE_PATCH)
-
-cleanAll:
-	$(TRIVY_COMMAND) rm -rf public
-	$(MAKE) clean
