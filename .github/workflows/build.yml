@@ -10,6 +10,11 @@ permissions:
   packages: write
   id-token: write
 
+env:
+  RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+  PROJECT_URL: ${{ github.server_url }}/${{ github.repository }}
+  COMMIT_SHA: ${{ github.sha }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
