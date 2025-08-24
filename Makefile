@@ -6,9 +6,9 @@ GITHUB_IMAGE ?= ghcr.io/fixl/docker-$(IMAGE_NAME)
 
 BUILD_DATE = $(shell date -u +"%Y-%m-%dT%H:%M:%SZ")
 
-CI_COMMIT_SHORT_SHA ?= $(shell git rev-parse --short HEAD)
-CI_PROJECT_URL ?= $(shell git config --get remote.origin.url)
-CI_PIPELINE_URL ?= local
+COMMIT_SHA ?= $(shell git rev-parse --short HEAD)
+PROJECT_URL ?= $(shell git config --get remote.origin.url)
+RUN_URL ?= local
 
 TAG = $(ANYBADGE_VERSION)
 
@@ -48,9 +48,9 @@ build:
 		--label "org.opencontainers.image.authors=@fixl" \
 		--label "org.opencontainers.image.version=$(ANYBADGE_VERSION)" \
 		--label "org.opencontainers.image.created=$(BUILD_DATE)" \
-		--label "org.opencontainers.image.source=$(CI_PROJECT_URL)" \
-		--label "org.opencontainers.image.revision=$(CI_COMMIT_SHORT_SHA)" \
-		--label "info.fixl.gitlab.pipeline-url=$(CI_PIPELINE_URL)" \
+		--label "org.opencontainers.image.source=$(PROJECT_URL)" \
+		--label "org.opencontainers.image.revision=$(COMMIT_SHA)" \
+		--label "info.fixl.github.run-url=$(RUN_URL)" \
 		--tag $(IMAGE_NAME) \
 		--tag $(GITHUB_IMAGE_LATEST) \
 		--tag $(GITHUB_IMAGE_MAJOR) \
