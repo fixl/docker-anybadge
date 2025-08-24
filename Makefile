@@ -73,10 +73,9 @@ publish: /proc/sys/fs/binfmt_misc/qemu-aarch64
 		--progress=plain \
 		--pull \
 		--push \
-		--build-arg FIREBASE_VERSION=$(FIREBASE_VERSION) \
-		--build-arg NODE_VERSION=$(NODE_VERSION) \
+		--build-arg ANYBADGE_VERSION=$(ANYBADGE_VERSION) \
 		--label "org.opencontainers.image.title=$(IMAGE_NAME)" \
-		--label "org.opencontainers.image.url=https://github.com/firebase/firebase-js-sdk" \
+		--label "org.opencontainers.image.url=https://github.com/jongracecox/anybadge" \
 		--label "org.opencontainers.image.authors=@fixl" \
 		--label "org.opencontainers.image.version=$(FIREBASE_VERSION)" \
 		--label "org.opencontainers.image.created=$(BUILD_DATE)" \
