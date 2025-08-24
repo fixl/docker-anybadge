@@ -16,6 +16,7 @@ EXTRACTED_FILE = extracted.tar
 DOCKER_BUILDKIT = 1
 
 TRIVY_COMMAND = docker compose run --rm trivy
+BINFMT_COMMAND = docker compose run --rm binfmt
 
 ANYBADGE_RUN_COMMAND = docker run --rm -t --entrypoint "" --volume $(shell pwd):/src --volume /var/run/docker.sock:/var/run/docker.sock -w /src $(IMAGE_NAME)
 
@@ -36,6 +37,10 @@ DOCKERHUB_IMAGE_PATCH = $(DOCKERHUB_IMAGE):$(PATCH)
 
 # Export vairables for child processes
 .EXPORT_ALL_VARIABLES:
+
+/proc/sys/fs/binfmt_misc/qemu-aarch64:
+	$(BINFMT_COMMAND) --install arm64
+	-docker buildx create --use --name firebase
 
 build:
 	docker buildx build \
@@ -62,6 +67,31 @@ build:
 		--tag $(DOCKERHUB_IMAGE_PATCH) \
 		.
 
+publish: /proc/sys/fs/binfmt_misc/qemu-aarch64
+	docker buildx build \
+		--platform linux/arm64,linux/amd64\
+		--progress=plain \
+		--pull \
+		--push \
+		--build-arg FIREBASE_VERSION=$(FIREBASE_VERSION) \
+		--build-arg NODE_VERSION=$(NODE_VERSION) \
+		--label "org.opencontainers.image.title=$(IMAGE_NAME)" \
+		--label "org.opencontainers.image.url=https://github.com/firebase/firebase-js-sdk" \
+		--label "org.opencontainers.image.authors=@fixl" \
+		--label "org.opencontainers.image.version=$(FIREBASE_VERSION)" \
+		--label "org.opencontainers.image.created=$(BUILD_DATE)" \
+		--label "org.opencontainers.image.source=$(PROJECT_URL)" \
+		--label "org.opencontainers.image.revision=$(COMMIT_SHA)" \
+		--label "info.fixl.github.run-url=$(RUN_URL)" \
+		--tag $(GITHUB_IMAGE_LATEST) \
+		--tag $(GITHUB_IMAGE_MAJOR) \
+		--tag $(GITHUB_IMAGE_MINOR) \
+		--tag $(GITHUB_IMAGE_PATCH) \
+		--tag $(DOCKERHUB_IMAGE_LATEST) \
+		--tag $(DOCKERHUB_IMAGE_MAJOR) \
+		--tag $(DOCKERHUB_IMAGE_MINOR) \
+		--tag $(DOCKERHUB_IMAGE_PATCH) \
+
 scan: $(EXTRACTED_FILE)
 	docker compose pull trivy
 
@@ -76,18 +106,6 @@ badges:
 	mkdir -p public
 	$(ANYBADGE_RUN_COMMAND) docker-size $(DOCKERHUB_IMAGE_PATCH) public/size
 	$(ANYBADGE_RUN_COMMAND) docker-version $(DOCKERHUB_IMAGE_PATCH) public/version
-
-publishDockerhub:
-	docker push $(DOCKERHUB_IMAGE_LATEST)
-	docker push $(DOCKERHUB_IMAGE_MAJOR)
-	docker push $(DOCKERHUB_IMAGE_MINOR)
-	docker push $(DOCKERHUB_IMAGE_PATCH)
-
-publishGitHub:
-	docker push $(GITHUB_IMAGE_LATEST)
-	docker push $(GITHUB_IMAGE_MAJOR)
-	docker push $(GITHUB_IMAGE_MINOR)
-	docker push $(GITHUB_IMAGE_PATCH)
 
 gitRelease:
 	-git tag -d $(TAG)

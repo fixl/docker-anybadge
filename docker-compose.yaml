@@ -6,6 +6,9 @@ services:
     volumes:
       - cache:/root/.cache/
       - .:/src
+  binfmt:
+    image: tonistiigi/binfmt
+    privileged: true
 
 volumes:
   cache:
