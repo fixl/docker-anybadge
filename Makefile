@@ -90,6 +90,7 @@ publish: /proc/sys/fs/binfmt_misc/qemu-aarch64
 		--tag $(DOCKERHUB_IMAGE_MAJOR) \
 		--tag $(DOCKERHUB_IMAGE_MINOR) \
 		--tag $(DOCKERHUB_IMAGE_PATCH) \
+		.
 
 scan: $(EXTRACTED_FILE)
 	docker compose pull trivy
