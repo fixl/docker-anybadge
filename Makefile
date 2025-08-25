@@ -40,7 +40,7 @@ DOCKERHUB_IMAGE_PATCH = $(DOCKERHUB_IMAGE):$(PATCH)
 
 /proc/sys/fs/binfmt_misc/qemu-aarch64:
 	$(BINFMT_COMMAND) --install arm64
-	-docker buildx create --use --name firebase
+	-docker buildx create --use --name anybadge
 
 build:
 	docker buildx build \
@@ -77,7 +77,7 @@ publish: /proc/sys/fs/binfmt_misc/qemu-aarch64
 		--label "org.opencontainers.image.title=$(IMAGE_NAME)" \
 		--label "org.opencontainers.image.url=https://github.com/jongracecox/anybadge" \
 		--label "org.opencontainers.image.authors=@fixl" \
-		--label "org.opencontainers.image.version=$(FIREBASE_VERSION)" \
+		--label "org.opencontainers.image.version=$(ANYBADGE_VERSION)" \
 		--label "org.opencontainers.image.created=$(BUILD_DATE)" \
 		--label "org.opencontainers.image.source=$(PROJECT_URL)" \
 		--label "org.opencontainers.image.revision=$(COMMIT_SHA)" \
@@ -116,6 +116,9 @@ gitRelease:
 
 clean:
 	$(TRIVY_COMMAND) rm -rf public/ *.tar *.sarif
+	-$(BINFMT_COMMAND) --uninstall qemu-aarch64
+	-docker buildx prune --force --all
+	-docker buildx rm anybadge
 	-docker rmi $(IMAGE_NAME)
 	-docker rmi $(GITHUB_IMAGE_LATEST)
 	-docker rmi $(GITHUB_IMAGE_MAJOR)
