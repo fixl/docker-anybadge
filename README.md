@@ -7,7 +7,7 @@
 [![Docker Stars](https://img.shields.io/docker/stars/fixl/anybadge)](https://hub.docker.com/r/fixl/anybadge)
 
 A Docker container containing [anybadge](https://github.com/jongracecox/anybadge) that can be used
-along with [3 Musketeers](https://3musketeers.io/).
+along with [3 Musketeers](https://3musketeers.pages.dev/).
 
 
 ## Build the image
